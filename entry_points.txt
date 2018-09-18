@@ -1,0 +1,2 @@
+[mt.application_collections]
+domains = airgun.base.modeling.entities.domains:DomainsCollection

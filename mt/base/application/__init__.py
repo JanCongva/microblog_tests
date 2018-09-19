@@ -2,9 +2,8 @@ import importscan
 from pkg_resources import iter_entry_points
 
 from mt.base.application.implementations.web_ui import ViaWebUI
-from mt.base.application.implementations.rest_api import ViaRESTAPI
 from mt.base.application.implementations import MtImplementationContext
-from mt.base.entities import EntityCollections
+from mt.base.application.entities import EntityCollections
 
 
 class Application(object):
@@ -13,12 +12,11 @@ class Application(object):
         self.hostname = hostname
         self.path = path
         self.scheme = scheme
-        self.web_ui = ViaWebUI(owner=self)
-        self.rest_api = ViaRESTAPI(owner=self)
-        self.context = MtImplementationContext.from_instances([self.web_ui, self.rest_api])
-        self.collections = EntityCollections.for_application(self)
         self.username = username
         self.password = password
+        self.web_ui = ViaWebUI(owner=self)
+        self.context = MtImplementationContext.from_instances([self.web_ui])
+        self.collections = EntityCollections.for_application(self)
 
     @property
     def address(self):

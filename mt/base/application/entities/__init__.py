@@ -22,7 +22,7 @@ class EntityCollections(object):
 
     @classmethod
     def for_application(cls, application):
-        from airgun.base.application import load_application_collections
+        from mt.base.application import load_application_collections
         return cls(
             parent=application, availiable_collections=load_application_collections()
         )

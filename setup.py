@@ -5,15 +5,15 @@ setup(
     name='mt',
     version='0.0.1',
     author='Dmitry Misharov',
-    # install_requires=[
-    #     'cached_property',
-    #     'navmazing',
-    #     'pytest',
-    #     'taretto',
-    #     'wait_for',
-    #     'widgetastic.core',
-    #     'widgetastic.bootstrap'
-    # ],
+    install_requires=[
+        'cached_property',
+        'navmazing',
+        'pytest',
+        'taretto',
+        'webdriver_kaifuku',
+        'widgetastic.bootstrap',
+        'widgetastic.core'
+    ],
     packages=find_packages(exclude=['tests*']),
     package_data={'': ['LICENSE']},
     include_package_data=True,

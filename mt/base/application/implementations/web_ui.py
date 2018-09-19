@@ -1,11 +1,13 @@
+import atexit
+
 from cached_property import cached_property
 from selenium.common.exceptions import NoSuchElementException
 from taretto.navigate import Navigate, NavigateStep, NavigateToSibling
 from taretto.ui import Browser
+from webdriver_kaifuku import BrowserManager
 
-from mt.base.browser_manager import BrowserManager
 from mt.base.application.implementations import MtImplementationContext, Implementation
-from mt.base.application.views.common import BaseLoggedInView, BasePage
+from mt.base.application.views.common import BaseLoggedInView, LoginPage
 
 
 class MtNavigateStep(NavigateStep):
@@ -68,7 +70,16 @@ class ViaWebUI(Implementation):
 
     def __init__(self, owner):
         super(ViaWebUI, self).__init__(owner)
-        self.browser_manager = BrowserManager()
+        self.browser_manager = BrowserManager.from_conf({
+            "webdriver": "Remote",
+            "webdriver_options": {
+                "desired_capabilities": {
+                    "acceptInsecureCerts": True,
+                    "browserName": "firefox",
+                    "marionette": "true"
+                }
+            }
+        })
 
     def create_view(self, view_class, additional_context=None):
         """Method that is used to instantiate a Widgetastic View.
@@ -95,12 +106,14 @@ class ViaWebUI(Implementation):
     @cached_property
     def widgetastic_browser(self):
         """This gives us a widgetastic browser."""
-        selenium_browser = self.browser_manager.ensure_open(url_key=self.application.address)
+        selenium_browser = self.browser_manager.ensure_open()
+        selenium_browser.get(self.application.address)
         self.browser_manager.add_cleanup(self._reset_cache)
-        return Browser(selenium_browser, self)
+        atexit.register(self.browser_manager.quit)
+        return Browser(selenium_browser)
 
     def open_login_page(self):
-        self.browser_manager.ensure_open(self.application.address)
+        self.widgetastic_browser.url = self.application.address
 
     def do_login(self):
         view = self.navigate_to(self, "LoginScreen")
@@ -113,13 +126,7 @@ class ViaWebUI(Implementation):
 
 @ViaWebUI.register_destination_for(ViaWebUI)
 class LoginScreen(MtNavigateStep):
-    VIEW = BasePage
-
-    def am_i_here(self):
-        return False
-
-    def prerequisite(self):
-        pass
+    VIEW = LoginPage
 
     def step(self):
         self.obj.open_login_page()

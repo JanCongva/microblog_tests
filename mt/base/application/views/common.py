@@ -1,4 +1,4 @@
-from widgetastic.bootstrap import Button
+from widgetastic_bootstrap import Button
 from widgetastic.widget import Checkbox, GenericLocatorWidget, Text, TextInput, View
 
 
@@ -14,7 +14,7 @@ class Navbar(View):
     logout = Text(".//a[normalize-space(.)='Logout']")
 
 
-class BasePage(View):
+class LoginPage(View):
     navbar = View.nested(Navbar)
     username = TextInput(id="username")
     password = TextInput(id="password")
@@ -33,4 +33,4 @@ class BaseLoggedInView(View):
 
     @property
     def is_displayed(self):
-        return self.greeting.text == "Hi, {}!".format(self.context["object"].username)
+        return self.greeting.text == "Hi, {}!".format(self.context["object"].application.username)

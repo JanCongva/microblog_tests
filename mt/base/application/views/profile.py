@@ -1,4 +1,3 @@
-from widgetastic_bootstrap import Button
 from widgetastic.widget import GenericLocatorWidget, Text, TextInput, View
 
 
@@ -8,10 +7,15 @@ class ProfileDetialsView(View):
 
     @property
     def is_displayed(self):
-        return title.text == "User: {}".format(self.context["object"].username)
+        return self.title.text == "User: {}".format(self.context["object"].username)
 
 
 class ProfileEditView(View):
+    title = Text(".//h1")
     username = TextInput(name="username")
     about = TextInput(name="about_me")
-    submit = Button("Submit")
+    submit = GenericLocatorWidget(".//input[@name='submit']")
+
+    @property
+    def is_displayed(self):
+        return self.title.text == "Edit Profile"

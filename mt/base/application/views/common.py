@@ -22,15 +22,19 @@ class LoginPage(View):
     login_button = Text(locator='.//input[@name="submit"]')
     register = GenericLocatorWidget(".//a[@href='/auth/register']")
 
+    @property
+    def is_displayed(self):
+        return False
+
 
 class BaseLoggedInView(View):
     navbar = View.nested(Navbar)
     greeting = Text(".//h1")
     text_area = TextInput(name="post")
     submit = Button("Submit")
-    newer_posts = Text(".//a[normalize-space(.)='Newer posts']")
-    older_posts = Text(".//a[normalize-space(.)='Older posts']")
+    newer_posts = Text(".//a[contains(normalize-space(.), 'Newer posts')]")
+    older_posts = Text(".//a[contains(normalize-space(.), 'Older posts')]")
 
     @property
     def is_displayed(self):
-        return self.greeting.text == "Hi, {}!".format(self.context["object"].application.username)
+        return self.newer_posts.is_displayed and self.older_posts.is_displayed

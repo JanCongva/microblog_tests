@@ -1,4 +1,5 @@
 import attr
+from wait_for import wait_for
 from navmazing import NavigateToAttribute, NavigateToSibling
 
 from mt.base.application.entities import BaseCollection, BaseEntity
@@ -12,9 +13,12 @@ class Profile(BaseEntity):
 
     def update(self, username=None, about=None):
         view = ViaWebUI.navigate_to(self, "Edit")
-        view.fill({"username": username, "about": about})
-        view.submit.click()
-        ViaWebUI.navigate_to(self, "Details")
+        wait_for(lambda: view.is_displayed)
+        changed = view.fill({"username": username, "about": about})
+        if changed:
+            self.username = username
+            view.submit.click()
+            ViaWebUI.navigate_to(self, "Details")
 
 
 @attr.s

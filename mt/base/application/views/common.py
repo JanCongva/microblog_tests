@@ -1,4 +1,3 @@
-from widgetastic_bootstrap import Button
 from widgetastic.widget import Checkbox, GenericLocatorWidget, Text, TextInput, View
 
 
@@ -19,7 +18,7 @@ class LoginPage(View):
     username = TextInput(id="username")
     password = TextInput(id="password")
     remember_me = Checkbox(id="remember_me")
-    login_button = Text(locator='.//input[@name="submit"]')
+    login_button = GenericLocatorWidget('.//input[@name="submit"]')
     register = GenericLocatorWidget(".//a[@href='/auth/register']")
 
     @property
@@ -31,7 +30,7 @@ class BaseLoggedInView(View):
     navbar = View.nested(Navbar)
     greeting = Text(".//h1")
     text_area = TextInput(name="post")
-    submit = Button("Submit")
+    submit = GenericLocatorWidget('.//input[@name="submit"]')
     newer_posts = Text(".//a[contains(normalize-space(.), 'Newer posts')]")
     older_posts = Text(".//a[contains(normalize-space(.), 'Older posts')]")
 

@@ -5,6 +5,7 @@ from selenium.common.exceptions import NoSuchElementException
 from taretto.navigate import Navigate, NavigateStep, NavigateToSibling
 from taretto.ui import Browser
 from webdriver_kaifuku import BrowserManager
+from wait_for import wait_for
 
 from mt.base.application.implementations import MtImplementationContext, Implementation
 from mt.base.application.views.common import BaseLoggedInView, LoginPage
@@ -139,3 +140,4 @@ class LoggedIn(MtNavigateStep):
 
     def step(self):
         self.obj.do_login()
+        wait_for(lambda: self.view.is_displayed)

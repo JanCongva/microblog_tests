@@ -1,9 +1,12 @@
-from widgetastic.widget import GenericLocatorWidget, Text, TextInput, View
+from widgetastic.widget import GenericLocatorWidget, ParametrizedView, Text, TextInput, View
+
+from mt.base.application.views.post import PostView
 
 
 class ProfileDetialsView(View):
     title = Text(".//h1")
     edit = GenericLocatorWidget(".//a[normalize-space(.)='Edit your profile']")
+    posts = ParametrizedView.nested(PostView)
 
     @property
     def is_displayed(self):

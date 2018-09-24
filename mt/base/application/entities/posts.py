@@ -12,7 +12,11 @@ class Post(BaseEntity):
     post_id = attr.ib()
 
     def delete(self):
-        view = ViaWebUI.navigate_to(self.parent, "All")
+        profile = self.parent.filters.get("parent")
+        if profile:
+            view = ViaWebUI.navigate_to(profile, "Details")
+        else:
+            view = ViaWebUI.navigate_to(self, "All")
         view.posts(self.post_id).delete()
 
     @property
@@ -25,6 +29,18 @@ class Post(BaseEntity):
 class PostsCollection(BaseCollection):
     ENTITY = Post
 
+    @property
+    def all(self):
+        profile = self.filters.get("parent")
+        if profile:
+            view = ViaWebUI.navigate_to(profile, "Details")
+        else:
+            view = ViaWebUI.navigate_to(self, "All")
+        posts = []
+        for post_id in view.posts.view_class.all(view.browser):
+            posts.append(self.instantiate(post_id[0]))
+        return posts
+
     def create(self, content):
         view = ViaWebUI.navigate_to(self, "All")
         changed = view.fill({"text_area": content})
@@ -33,7 +49,8 @@ class PostsCollection(BaseCollection):
             return self.instantiate(view.posts.view_class._last_post_id(view.browser)[0] + 1)
 
     def delete(self, *post_ids):
-        ViaWebUI.navigate_to(self, "All")
+        profile = self.filters.get("profile")
+        ViaWebUI.navigate_to(profile, "Details") if user else ViaWebUI.navigate_to(self, "All")
         for post_id in post_ids:
             post = self.instantiate(post_id)
             post.delete()

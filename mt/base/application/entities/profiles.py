@@ -3,6 +3,7 @@ from wait_for import wait_for
 from navmazing import NavigateToAttribute, NavigateToSibling
 
 from mt.base.application.entities import BaseCollection, BaseEntity
+from mt.base.application.entities.posts import PostsCollection
 from mt.base.application.implementations.web_ui import MtNavigateStep, ViaWebUI
 from mt.base.application.views.profile import ProfileDetialsView, ProfileEditView
 
@@ -10,15 +11,19 @@ from mt.base.application.views.profile import ProfileDetialsView, ProfileEditVie
 @attr.s
 class Profile(BaseEntity):
     username = attr.ib()
+    _collections = {'posts': PostsCollection}
 
     def update(self, username=None, about=None):
         view = ViaWebUI.navigate_to(self, "Edit")
-        wait_for(lambda: view.is_displayed)
         changed = view.fill({"username": username, "about": about})
         if changed:
             self.username = username
             view.submit.click()
             ViaWebUI.navigate_to(self, "Details")
+
+    @property
+    def posts(self):
+        return self.collections.posts
 
 
 @attr.s
@@ -33,6 +38,7 @@ class ProfileDetails(MtNavigateStep):
 
     def step(self):
         self.parent.navbar.profile.click()
+        wait_for(lambda: self.view.is_displayed)
 
 
 @ViaWebUI.register_destination_for(Profile, "Edit")
@@ -42,3 +48,4 @@ class ProfileEdit(MtNavigateStep):
 
     def step(self):
         self.parent.edit.click()
+        wait_for(lambda: self.view.is_displayed)

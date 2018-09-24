@@ -11,13 +11,16 @@ from mt.base.application.views.profile import ProfileDetialsView, ProfileEditVie
 class Profile(BaseEntity):
     username = attr.ib()
 
-    def update(self, username=None, about=None):
+    def update(self, username=None, about=None, address=None):
         view = ViaWebUI.navigate_to(self, "Edit")
         wait_for(lambda: view.is_displayed)
-        changed = view.fill({"username": username, "about": about})
+        changed = view.fill({
+            "basic_info": {"username": username, "about": about},
+            "additional_info": {"address": address}
+        })
         if changed:
             self.username = username
-            view.submit.click()
+            view.basic_info.submit.click()
             ViaWebUI.navigate_to(self, "Details")
 
 

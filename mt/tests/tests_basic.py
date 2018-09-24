@@ -1,3 +1,5 @@
+from wait_for import wait_for
+
 from mt.base.application.implementations.web_ui import ViaWebUI
 
 
@@ -15,4 +17,5 @@ def test_edit_profile(application, request):
 
     profile.update(username="misharov2", about="My bio")
     view = ViaWebUI.navigate_to(profile, "Details")
+    wait_for(lambda: view.is_displayed)
     assert view.title.text == "User: misharov2"

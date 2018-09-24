@@ -44,4 +44,4 @@ class ProfileEdit(MtNavigateStep):
     prerequisite = NavigateToSibling("Details")
 
     def step(self):
-        self.parent.edit.click()
+        self.parent.actions.item_select("Edit your profile")

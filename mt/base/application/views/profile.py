@@ -1,10 +1,11 @@
 from widgetastic.widget import GenericLocatorWidget, Text, TextInput, View
-from widgetastic_bootstrap import Tab
+from widgetastic_bootstrap import Dropdown, Tab
 
 
 class ProfileDetialsView(View):
     title = Text(".//h1")
     edit = GenericLocatorWidget(".//a[normalize-space(.)='Edit your profile']")
+    actions = Dropdown("Profile actions")
 
     @property
     def is_displayed(self):

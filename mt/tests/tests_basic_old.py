@@ -51,3 +51,17 @@ def test_edit_profile(browser, application, log_in, request):
     elem.click()
     assert browser.find_elements_by_xpath("//div//table//h1[contains(., 'misharov2')]"),\
         "Username change wasn't successful - user profile page title doesn't contain new username"
+
+
+def test_post_create_delete(browser, log_in):
+    elem = browser.find_element_by_id("post")
+    elem.send_keys("Test post")
+    elem = browser.find_element_by_id("submit")
+    elem.click()
+    assert browser.find_elements_by_xpath(
+        "//div[@class='container']//table//td/span[starts-with(@id, 'post') and .='Test post']")
+    elem = browser.find_element_by_xpath(
+        "//div[@class='container']//table//td/span[starts-with(@id, 'post') and .='Test post']/../a[.='delete']")
+    elem.click()
+    assert not browser.find_elements_by_xpath(
+        "//div[@class='container']//table//td/span[starts-with(@id, 'post') and .='Test post']")

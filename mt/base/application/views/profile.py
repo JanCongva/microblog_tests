@@ -16,14 +16,16 @@ class ProfileEditView(View):
 
     @View.nested
     class basic_info(Tab):
-        TAB = "Basic Info"
+        ROOT = ".//div[@id='basic']"
+        TAB_NAME = "Basic info"
         username = TextInput(name="username")
         about = TextInput(name="about_me")
         submit = GenericLocatorWidget(".//input[@name='submit']")
 
     @View.nested
     class additional_info(Tab):
-        TAB = "Additional Info"
+        ROOT = ".//div[@id='additional']"
+        TAB_NAME = "Additional info"
         address = TextInput(name="address")
 
     @property

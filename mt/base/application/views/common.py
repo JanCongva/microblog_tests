@@ -1,4 +1,7 @@
-from widgetastic.widget import Checkbox, GenericLocatorWidget, Text, TextInput, View
+from widgetastic.widget import (Checkbox, GenericLocatorWidget, ParametrizedView, Text, TextInput,
+                                View)
+
+from mt.base.application.views.post import PostView
 
 
 class Navbar(View):
@@ -33,6 +36,7 @@ class BaseLoggedInView(View):
     submit = GenericLocatorWidget('.//input[@name="submit"]')
     newer_posts = Text(".//a[contains(normalize-space(.), 'Newer posts')]")
     older_posts = Text(".//a[contains(normalize-space(.), 'Older posts')]")
+    posts = ParametrizedView.nested(PostView)
 
     @property
     def is_displayed(self):

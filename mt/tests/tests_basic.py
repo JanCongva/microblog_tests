@@ -19,3 +19,10 @@ def test_edit_profile(application, request):
     view = ViaWebUI.navigate_to(profile, "Details")
     wait_for(lambda: view.is_displayed)
     assert view.title.text == "User: misharov2"
+
+
+def test_post_create_delete(application):
+    post = application.collections.posts.create(content="Hello world!")
+    assert post.exists
+    post.delete()
+    assert not post.exists

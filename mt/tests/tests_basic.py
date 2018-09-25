@@ -1,5 +1,3 @@
-from wait_for import wait_for
-
 from mt.base.application.implementations.web_ui import ViaWebUI
 
 
@@ -15,7 +13,13 @@ def test_edit_profile(application, request):
     def _revert():
         profile.update(username="misharov", about="")
 
-    profile.update(username="misharov2", about="My bio", city="Some city")
+    profile.update(username="misharov2", about="My bio")
     view = ViaWebUI.navigate_to(profile, "Details")
-    wait_for(lambda: view.is_displayed)
     assert view.title.text == "User: misharov2"
+
+
+def test_post_create_delete(application):
+    post = application.collections.posts.create(content="Hello world!")
+    assert post.exists
+    post.delete()
+    assert not post.exists

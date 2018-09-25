@@ -16,6 +16,7 @@ class ProfileDetialsView(View):
 class ProfileEditView(View):
     title = Text(".//h1")
     username = TextInput(name="username")
+    city = TextInput(name="city")
     about = TextInput(name="about_me")
     submit = GenericLocatorWidget(".//input[@name='submit']")
 

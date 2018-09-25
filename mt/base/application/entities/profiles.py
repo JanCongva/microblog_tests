@@ -12,9 +12,9 @@ class Profile(BaseEntity):
     username = attr.ib()
     _collections = {'posts': PostsCollection}
 
-    def update(self, username=None, about=None):
+    def update(self, username=None, about=None, city=None):
         view = ViaWebUI.navigate_to(self, "Edit")
-        changed = view.fill({"username": username, "about": about})
+        changed = view.fill({"username": username, "about": about, "city": city})
         if changed:
             self.username = username
             view.submit.click()

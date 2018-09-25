@@ -26,7 +26,7 @@ class ProfileEditView(View):
     class additional_info(Tab):
         ROOT = ".//div[@id='additional']"
         TAB_NAME = "Additional info"
-        address = TextInput(name="address")
+        city = TextInput(name="city")
 
     @property
     def is_displayed(self):

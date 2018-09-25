@@ -15,7 +15,7 @@ def test_edit_profile(application, request):
     def _revert():
         profile.update(username="misharov", about="")
 
-    profile.update(username="misharov2", about="My bio", address="Some address")
+    profile.update(username="misharov2", about="My bio", city="Some city")
     view = ViaWebUI.navigate_to(profile, "Details")
     wait_for(lambda: view.is_displayed)
     assert view.title.text == "User: misharov2"

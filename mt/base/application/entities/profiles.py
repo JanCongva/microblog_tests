@@ -1,5 +1,4 @@
 import attr
-from wait_for import wait_for
 from navmazing import NavigateToAttribute, NavigateToSibling
 
 from mt.base.application.entities import BaseCollection, BaseEntity
@@ -38,7 +37,6 @@ class ProfileDetails(MtNavigateStep):
 
     def step(self):
         self.parent.navbar.profile.click()
-        wait_for(lambda: self.view.is_displayed)
 
 
 @ViaWebUI.register_destination_for(Profile, "Edit")
@@ -48,4 +46,3 @@ class ProfileEdit(MtNavigateStep):
 
     def step(self):
         self.parent.edit.click()
-        wait_for(lambda: self.view.is_displayed)

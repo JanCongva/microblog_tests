@@ -1,11 +1,13 @@
-from widgetastic.widget import GenericLocatorWidget, Text, TextInput, View
+from widgetastic.widget import GenericLocatorWidget, ParametrizedView, Text, TextInput, View
 from widgetastic_bootstrap import Dropdown, Tab
+
+from mt.base.application.views.post import PostView
 
 
 class ProfileDetialsView(View):
     title = Text(".//h1")
-    edit = GenericLocatorWidget(".//a[normalize-space(.)='Edit your profile']")
     actions = Dropdown("Profile actions")
+    posts = ParametrizedView.nested(PostView)
 
     @property
     def is_displayed(self):
@@ -27,7 +29,7 @@ class ProfileEditView(View):
     class additional_info(Tab):
         ROOT = ".//div[@id='additional']"
         TAB_NAME = "Additional info"
-        address = TextInput(name="address")
+        city = TextInput(name="city")
 
     @property
     def is_displayed(self):

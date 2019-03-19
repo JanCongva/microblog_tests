@@ -1,0 +1,12 @@
+version: '3'
+services:
+  microblog:
+    build: ~/microblog/
+    ports:
+      - "5000:5000"
+  selenium:
+    image: "cfmeqe/cfme_sel_stable"
+    ports:
+      - "5999:5999"
+      - "4444:4444"
+

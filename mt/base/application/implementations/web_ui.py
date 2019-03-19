@@ -76,7 +76,7 @@ class ViaWebUI(Implementation):
             "webdriver_options": {
                 "desired_capabilities": {
                     "acceptInsecureCerts": True,
-                    "browserName": "chrome"
+                    "browserName": "firefox"
                 }
             }
         })

@@ -17,7 +17,7 @@ setup(
     packages=find_packages(exclude=['tests*']),
     package_data={'': ['LICENSE']},
     include_package_data=True,
-    license='GNU GPL v3.0',
+    license='Apache-2.0',
     classifiers=(
         'Development Status :: 1 - Planning',
         'Intended Audience :: Developers',

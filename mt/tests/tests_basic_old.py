@@ -1,8 +1,5 @@
-from time import sleep
-
 import pytest
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 
 
 @pytest.yield_fixture
@@ -26,7 +23,10 @@ def log_in(browser, application):
 
 def test_login(browser, application):
     log_in(browser, application)
-    assert browser.find_elements_by_xpath("//nav//a[.='Logout']"), "Login wasn't successful - logout button not found"
+    assert (
+        browser.find_elements_by_xpath("//nav//a[.='Logout']"),
+        "Login wasn't successful - logout button not found"
+    )
 
 
 def test_edit_profile(browser, application, log_in, request):

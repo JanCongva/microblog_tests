@@ -21,16 +21,14 @@ function install_virtual_env() {
     $HOME/test_venv/bin/pip install jupyter
 }
 
-function run_docker_compose() {
-    docker-compose up
-}
-
-function open_vncviewer() {
-    tigervnc-viewer localhost:5900
+function run_everything() {
+    docker-compose up &
+    bash wait-for-it.sh localhost:5999 -- vncviewer :99 &
+    $HOME/test_venv/bin/jupyter notebook workshop.ipynb
 }
 
 install_docker
 install_docker_compose
 install_vnc_viewer
 install_virtual_env
-run_docker_compose
+run_everything

@@ -1,11 +1,13 @@
 version: "3"
 services:
+  selenium:
+    image: cfmeqe/cfme_sel_stable
+    ports:
+      - "5999:5999"
+      - "4444:4444"
+    tmpfs:
+      - /tmp
   microblog:
     image: quarck/microblog
     ports:
       - "5000:5000"
-  selenium:
-    image: cfmeqe/cfme_sel_stable
-    ports:
-      - "5900:5999"
-      - "4444:4444"

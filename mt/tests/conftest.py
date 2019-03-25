@@ -9,5 +9,5 @@ def application():
         hostname="microblog:5000",
         scheme="http",
         username="user",
-        password="123456"
+        password="password"
     )

@@ -11,11 +11,11 @@ def test_edit_profile(application, request):
 
     @request.addfinalizer
     def _revert():
-        profile.update(username="misharov", about="")
+        profile.update(username="user", about="")
 
-    profile.update(username="misharov2", about="My bio")
+    profile.update(username="new_user", about="My bio")
     view = ViaWebUI.navigate_to(profile, "Details")
-    assert view.title.text == "User: misharov2"
+    assert view.title.text == "User: new_user"
 
 
 def test_post_create_delete(application):

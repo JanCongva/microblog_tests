@@ -1,6 +1,7 @@
 #!/bin/bash
 
 function install_packages() {
+    sudo apt update
     sudo apt install -y docker.io docker-compose tigervnc-viewer wait-for-it
 }
 

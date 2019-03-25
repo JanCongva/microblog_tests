@@ -12,7 +12,8 @@ setup(
         'taretto',
         'webdriver_kaifuku',
         'widgetastic.bootstrap',
-        'widgetastic.core'
+        'widgetastic.core',
+        'ipytest'
     ],
     packages=find_packages(exclude=['tests*']),
     package_data={'': ['LICENSE']},

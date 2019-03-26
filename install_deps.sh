@@ -14,7 +14,7 @@ function install_virtual_env() {
 function run_everything() {
     sudo docker-compose up &
     wait-for-it -t 0 localhost:5999 -- vncviewer :99 &
-    $HOME/test_venv/bin/jupyter notebook workshop.ipynb
+    $HOME/test_venv/bin/jupyter notebook "Testing web applications.ipynb"
 }
 
 install_packages
